@@ -1,0 +1,22 @@
+{
+  "env": {
+    "browser": true
+  },
+  "extends": [
+    "@softboxlab/eslint-config-gandalf-lint-react",
+    "plugin:react/recommended"
+  ],
+  "parser": "babel-eslint",
+  "settings": {
+    "react": {
+      "version": "16.8.2"
+    }
+  },
+  "rules": {
+    "arrow-parens": [2, "always", { "requireForBlockBody": true }],
+    "indent": ["error", 4],
+    "react/default-props-match-prop-types": "off",
+    "react/require-default-props": "off",
+    "camelcase": "off"
+  }
+}

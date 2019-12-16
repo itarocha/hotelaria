@@ -1,0 +1,171 @@
+/*
+
+window.addEventListener("storage", function () {
+    // do your checks to detect
+    // changes in "e1", "e2" & "e3" here
+}, false);
+
+window.addEventListener('storage', function(e) {  
+  document.querySelector('.my-key').textContent = e.key;
+  document.querySelector('.my-old').textContent = e.oldValue;
+  document.querySelector('.my-new').textContent = e.newValue;
+  document.querySelector('.my-url').textContent = e.url;
+  document.querySelector('.my-storage').textContent = e.storageArea;
+});
+
+storage.removeItem
+
+*/
+
+/*
+function useStorage() {
+  const [token, setToken] = useState(localStorage.getItem(TOKEN));
+  
+  useEffect(() => {
+    const handleStorage = () => {
+      setToken(localStorage.getItem(TOKEN))
+      console.log('mudou storage no useStorage() ',new Date())
+    }
+
+    window.addEventListener('storage', handleStorage)
+
+    return () => {
+      window.removeEventListener('storage', handleStorage)
+    }
+  });
+  
+  return token;
+}
+*/
+
+
+
+
+
+
+
+
+
+
+
+
+import React from 'react';
+import { Row, Col, Form, Input, Button, Typography } from 'antd';
+import {withFormik, Form as FormikForm, Field as FormikField, ErrorMessage} from 'formik';
+import * as Yup from 'yup';
+
+//import {UserContext} from '../UserContext';
+
+const FormItem = Form.Item;
+const {Title} = Typography;
+
+const Login = (props) => {
+
+    return (
+        
+        <FormikForm 
+
+            initialValues={{ firstName: '', lastName: '', email: '' }}
+            validationSchema={Yup.object({
+            firstName: Yup.string()
+                .min(15, 'Must be 15 characters or less')
+                .required('Required'),
+            lastName: Yup.string()
+                .min(20, 'Must be 20 characters or less')
+                .required('Required'),
+            email: Yup.string()
+                .email('Invalid email addresss`')
+                .required('Required'),
+            })}
+            onSubmit={(values, { setSubmitting }) => {
+            setTimeout(() => {
+                alert(JSON.stringify(values, null, 2));
+                setSubmitting(false);
+            }, 400);
+            }}
+
+
+        >  
+            {/*
+
+            <Form>
+                <div style={{textAlign:'center'}}>
+                <Title level={3}>Login</Title>
+                </div>
+
+
+                <Row type="flex" justify="center" gutter={[16,16]}>
+                    <Col span={8}>
+                        <FormItem>
+                            <FormikField
+                                name="username"
+                                render = {
+                                    ({ field }) => <Input {...field} placeholder="Email" />
+                                }
+                            />
+                            <ErrorMessage name="username" />
+                        </FormItem>
+                    </Col>
+                </Row>                
+                <Row type="flex" justify="center" gutter={[16,16]}>
+                    <Col span={8}>
+                        <FormItem>
+                            <FormikField
+                                name="password"    
+                                render = {
+                                    ({field}) => <Input type="password" {...field} placeholder="Senha" />
+                                } />
+                                <ErrorMessage name="password" />
+                        </FormItem>
+                    </Col>
+                </Row>                
+
+                <Row type="flex" justify="center" gutter={[16,16]}>
+                    <Col span={8}>
+                        <FormItem>
+                            <Button type="primary" 
+                                    htmlType="submit"
+                                    style={{width:"100%",height:38,fontSize:16}}
+                            > 
+                            Login
+                            </Button>
+                        </FormItem>
+                    </Col>
+                </Row>                
+
+            </Form>
+
+
+            */}
+        </FormikForm>
+    );
+   
+}
+
+export default Login;
+
+
+
+
+
+
+
+
+
+
+
+----------------------
+
+      <FormikForm>
+        <label htmlFor="username">Usuário</label>
+        <Field id="username" name="username" type="email" />
+        <ErrorMessage name="username" />
+
+        <label htmlFor="password">Senha</label>
+        <Field id="password" name="password" type="password" />
+        <ErrorMessage name="password" />
+
+        <button type="submit">Submit</button>
+      </FormikForm>
+
+

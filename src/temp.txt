@@ -1,0 +1,144 @@
+CSS GRID CHANGES EVERYTHING
+go get your grid on today
+https://mor10.com/wceu2017
+
+
+<div class="site">
+
+    <header class="masterhead">
+    </header>
+
+    <h1 class="page-title"></h1>
+
+    <main class="main-content">
+    </main>
+
+    <aside class="sidebar">
+    </aside>
+
+    <footer class="footer">
+    </footer>
+</div> 
+
+site{
+    display: grid;
+    grid-template-comumns: 2fr 1fr 1fr; (em, px, %, fr, etc)
+    grid-template-rows: auto 1fr 3fr; 
+    grid-template-areas:
+    "title title title"
+    "main header header"
+    "main sidebar footer";
+}
+
+.masterhead{
+    //grid-column: 2/4; (start and end)
+    //grid-row: 2/3;
+    grid-area: header;
+}
+
+.page-title {
+    //grid-column: 1/4;
+    //grid-row: 1/2;
+    grid-area: title;
+}
+
+.main-content {
+    //grid-column: 1/2; 
+    //grid-row: 2/4;
+    grid-area: main;
+}
+
+@media screen and (min-width: 34em) {
+    .site{
+        grid-template-comumns: 2fr 1fr 1fr;
+        grid-template-areas:
+        "title title title"
+        "main header header"
+        "main sidebar footer";
+    }
+}
+
+@supports (display: grid) {...}
+
+
+
+
+  Grid container
+  item 
+
+  line
+-----------------------
+-> row, column - referenciados por número, startando e finalizando com as bordas da grid. Primeira linha 1, contando
+  até a última linha
+
+
+  cell
+
+
+  track
+  ---------------------
+  espaço entre duas ou mais linhas adjacentes. Row, Column
+  
+  area
+  ---------
+pode ter uma ou mais células
+
+
+  gap
+  ---------------------
+  espaço entre tracks. também chamada de gutters
+
+
+  grid-template-areas
+
+  grid-area: [area-name]
+
+  Nested grids
+  grids are not inherited by child elements. Instead we create nested grids.
+---------------------------
+
+CSS Grid:
+A Practical Approach for today
+
+1. Build accessible mobile-first layout without grid.
+2. Use mobile-first layout as fallback for all browsers.
+3. Use @supports to detect grid support.
+4. At the appropriate breakpoint, create layout with grid and grid-areas.
+5. Explore new layouts as viewport widens.
+
+Firefox has a grid inspector
+https://goo.gl/SJmlms
+
+Rachel Andrew's Grid by Example is doctrine.
+https://gridbyexample.com
+
+MDN has exhaustive documentation.
+https://goo.gl/wa0Fk9
+
+CSS Tricks has a Complete Guide to CSS Grid.
+https://goo.gl/Z01gjF
+
+Kuhn, my theme using CSS grid, is on GitHub to give you ideas.
+https://goo.gl/URouSh
+
+Building Production-Ready CSS Grid Layouts today
+by yours truly at Smashing Magazine
+https://goo.gl/dae838
+
+
+
+Go where you want the web to go and the rest will follow
+
+CSS Grid means you can finally use proper grid systems for your designs!
+
+SET BEST PRACTICES
+BE RESPONSIBLE
+
+1. Make it accessible
+2. Make it fancy
+3. Make sure the fancy doesn't break accessibility.
+
+
+
+
+
