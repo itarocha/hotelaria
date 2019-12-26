@@ -1,9 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { Row, Col, Button } from 'antd'
-import { StyledMapaHeader, StyledMapaBody, StyledCellVazia, StyledLinhaLeito, StyledLinhaHospedagem } from './style'
-import StyledCellHeaderText from './StyledCellHeaderText'
+import { StyledGrantt, StyledWrap, StyledLinha, StyledGrid, StyledTitulo, StyledHospede } from './style'
 import StyledCellHeaderDay from './StyledCellHeaderDay'
-import CelulaHospedagem from './CelulaHospedagem'
 import HospedagensService from '../../services/HospedagensService'
 import { hoje, semanaAnterior, semanaSeguinte, formatDate, diaSemana } from '../../util/commons/petraDate'
 
@@ -37,6 +35,16 @@ const MapaHospedagens = () => {
         setDataAtual(semanaSeguinte(dataAtual))
     }
 
+    const resolveCor = (status) => {
+        let cor = '#FF8A80'
+        if (status === 'ABERTA') {
+            cor = '#4DB6AC'
+        } else if (status === 'ENCERRADA') {
+            cor = '#B0BEC5'
+        }
+        return cor
+    }
+
     return (
         <div>
             <Row type="flex" gutter={[16, 16]}>
@@ -47,31 +55,53 @@ const MapaHospedagens = () => {
                 </Col>
             </Row>
 
-            <StyledMapaHeader>
-                <StyledCellHeaderText text="Quarto/ Leito" />
-                {
-                    dias.map((dia, idx) => <StyledCellHeaderDay day={formatDate(dia, 'DD/MMM')} weekDay={diaSemana(dia)} key={idx}/>)
-                }
-            </StyledMapaHeader>
+            <StyledGrantt>
 
-            <StyledMapaBody>
-                {linhas.map((leito, i) => (
-                    <StyledLinhaLeito key={i}>
-                        <StyledCellHeaderText text={`${leito.quartoNumero}-${leito.leitoNumero}`} />
+                <StyledWrap>
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </StyledWrap>
 
-                        <StyledLinhaHospedagem key={i}>
-                            {
-                                leito.hospedagens.length === 0 ?
-                                    [1, 2, 3, 4, 5, 6, 7].map((n) => <StyledCellVazia key={n.toString()}/>) :
-                                    leito.hospedagens.map((h) => h.dias.map((dia, index) => (dia === 0 ?
-                                        <StyledCellVazia key={`${index}-${i}`}/> :
-                                        <CelulaHospedagem hospedagem={h} index={index} />)))
-                            }
-                        </StyledLinhaHospedagem>
-                    </StyledLinhaLeito>
+                <StyledLinha>
+                    <StyledTitulo>
+                        Quarto/Leito
+                    </StyledTitulo>
+                    <StyledGrid >
+                        {
+                            dias.map((dia, idx) => <StyledCellHeaderDay day={formatDate(dia, 'DD/MMM')} weekDay={diaSemana(dia)} key={idx}/>)
+                        }
+                    </StyledGrid>
+                </StyledLinha>
+
+                {linhas.map((leito) => (
+                    <StyledLinha key={leito.leitoId}>
+                        <StyledTitulo colIni={-1} colFim={-1} key={`t-${leito.quartoNumero}-${leito.leitoNumero}`}>
+                            {`${leito.quartoNumero}-${leito.leitoNumero}`}
+                        </StyledTitulo>
+                        <StyledGrid key={`g-${leito.quartoNumero}-${leito.leitoNumero}`}>
+                            {leito.hospedagens.map((h, idx) => (
+                                <StyledHospede key={idx}
+                                    colIni={h.idxIni}
+                                    colFim={h.idxFim}
+                                    classeIni={h.clsIni}
+                                    classeFim={h.clsFim}
+                                    fundo={resolveCor(h.status)}
+                                    onClick={() => { console.table(h.hpdId, h.identificador, h.nome) }}
+                                >
+                                    {h.nome}
+                                </StyledHospede>
+                            ))}
+                        </StyledGrid>
+                    </StyledLinha>
                 ))
                 }
-            </StyledMapaBody>
+            </StyledGrantt>
         </div>
     )
 }
