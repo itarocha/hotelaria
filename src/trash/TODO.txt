@@ -1,0 +1,55 @@
+Para o Server, mudar serviço
+/app/hospedagem/mapa
+
+criar e utilizar
+/app/hospedagem/mapa/linhas
+
+
+
+- remover 
+    * cidades
+    * quadro
+    * hospedes
+- remover de linhas.hospedagens
+    * idxIni
+    * idxFim
+    * width
+    * dias
+- adicionar em linhas.hospedagens
+    * dataIni
+    * dataFim
+        
+- modelo final
+{
+    "dataIni": "2019-12-01",
+    "dataFim": "2019-12-07",
+    "dias": [
+        "2019-12-01",
+        "2019-12-02",
+        "2019-12-03",
+        "2019-12-04",
+        "2019-12-05",
+        "2019-12-06",
+        "2019-12-07"
+    ],
+    "linhas": [
+        {
+            "leitoId": 1,
+            "leitoNumero": 1,
+            "quartoId": 1,
+            "quartoNumero": 1,
+            "hospedagens": [
+                {
+                    "hpdId": 1581,
+                    "identificador": "T001541",
+                    "nome": "MARIA DE FATIMA FRANCO",
+                    "telefone": "34 9 8891-9666",
+                    "status": "ENCERRADA",
+                    "dataIni": "2019-12-02",
+                    "dataFim": "2019-12-04",
+                    "clsIni": "durante",
+                    "clsFim": "fim"
+                },
+
+    ], ...
+}
