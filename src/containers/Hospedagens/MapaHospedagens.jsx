@@ -1,39 +1,31 @@
 import React, { useState, useEffect } from 'react'
-import { Row, Col, Button } from 'antd'
+import PropTypes from 'prop-types'
 import { StyledGrantt, StyledWrap, StyledLinha, StyledGrid, StyledTitulo, StyledHospede } from './style'
 import StyledCellHeaderDay from './StyledCellHeaderDay'
 import HospedagensService from '../../services/HospedagensService'
-import { hoje, semanaAnterior, semanaSeguinte, formatDate, diaSemana } from '../../util/commons/petraDate'
+import { hoje, formatDate, diaSemana } from '../../util/commons/petraDate'
 
-const MapaHospedagens = () => {
-    const [linhas, setLinhas] = useState([])
+const MapaHospedagens = ({ date }) => {
+    const [leitos, setLeitos] = useState([])
     const [dias, setDias] = useState([])
-    const [enviando, setEnviando] = useState(false)
+    // const [enviando, setEnviando] = useState(false)
     const [dataAtual, setDataAtual] = useState(hoje())
 
     useEffect(() => {
-        setEnviando(true)
-        HospedagensService.getAll(dataAtual)
+        // setEnviando(true)
+        HospedagensService.getLinhas(dataAtual)
             .then((data) => {
                 // tem mais: hospedes, quadro, cidades
-                const { dias, linhas } = data
-                setLinhas(linhas)
+                const { dias, leitos } = data
+                setLeitos(leitos)
                 setDias(dias)
-                setEnviando(false)
+                // setEnviando(false)
             })
     }, [dataAtual])
 
-    const handleGetDadosHoje = () => {
-        setDataAtual(hoje())
-    }
-
-    const handleGetDadosSemanaAnterior = () => {
-        setDataAtual(semanaAnterior(dataAtual))
-    }
-
-    const handleGetDadosSemanaSeguinte = () => {
-        setDataAtual(semanaSeguinte(dataAtual))
-    }
+    useEffect(() => {
+        setDataAtual(date)
+    }, [date])
 
     const resolveCor = (status) => {
         let cor = '#FF8A80'
@@ -47,16 +39,9 @@ const MapaHospedagens = () => {
 
     return (
         <div>
-            <Row type="flex" gutter={[16, 16]}>
-                <Col span={12} style={{ marginBottom: 10 }}>
-                    <Button type="primary" size="default" style={{ marginRight: 10 }} disabled={enviando} onClick={handleGetDadosSemanaAnterior}>Semana Anterior</Button>
-                    <Button type="primary" size="default" style={{ marginRight: 10 }} disabled={enviando} onClick={handleGetDadosHoje}>Hoje</Button>
-                    <Button type="primary" size="default" style={{ marginRight: 10 }} disabled={enviando} onClick={handleGetDadosSemanaSeguinte}>Semana Seguinte</Button>
-                </Col>
-            </Row>
+            <div>A Data atual é {date}</div>
 
             <StyledGrantt>
-
                 <StyledWrap>
                     <span></span>
                     <span></span>
@@ -79,16 +64,16 @@ const MapaHospedagens = () => {
                     </StyledGrid>
                 </StyledLinha>
 
-                {linhas.map((leito) => (
+                {leitos.map((leito) => (
                     <StyledLinha key={leito.leitoId}>
                         <StyledTitulo colIni={-1} colFim={-1} key={`t-${leito.quartoNumero}-${leito.leitoNumero}`}>
                             {`${leito.quartoNumero}-${leito.leitoNumero}`}
                         </StyledTitulo>
                         <StyledGrid key={`g-${leito.quartoNumero}-${leito.leitoNumero}`}>
-                            {leito.hospedagens.map((h, idx) => (
+                            {leito.linhas.map((h, idx) => (
                                 <StyledHospede key={idx}
-                                    colIni={h.idxIni}
-                                    colFim={h.idxFim}
+                                    colIni={ dias.indexOf(h.dataIni) }
+                                    colFim={ dias.indexOf(h.dataFim) }
                                     classeIni={h.clsIni}
                                     classeFim={h.clsFim}
                                     fundo={resolveCor(h.status)}
@@ -104,6 +89,10 @@ const MapaHospedagens = () => {
             </StyledGrantt>
         </div>
     )
+}
+
+MapaHospedagens.propTypes = {
+    date: PropTypes.string.isRequired
 }
 
 export default MapaHospedagens

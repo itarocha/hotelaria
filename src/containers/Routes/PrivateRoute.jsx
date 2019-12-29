@@ -4,7 +4,6 @@ import { isAuthenticated } from '../../util/api/store'
 
 // eslint-disable-next-line react/prop-types
 const PrivateRoute = ({ component: Component, location, ...rest }) => {
-    console.log('buscando informações de storage.isAuthenticated()...')
     const autenticado = isAuthenticated()
     return (
         <Route

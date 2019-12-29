@@ -21,8 +21,8 @@ const baseApi = () => {
 const Api = {
     request (path, options) {
         const base = baseApi()
-        console.log(options)
-        console.log(path)
+        // console.log(options)
+        // console.log(path)
         return base(path, options) // .then(resp => resp.data);
     }
 }
