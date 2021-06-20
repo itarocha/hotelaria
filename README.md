@@ -71,7 +71,7 @@ This section has moved here: https://facebook.github.io/create-react-app/docs/tr
 `docker build . -t react-docker`
 
 ## Run docker container
-`docker run -p 8000:80 react-docker` and Navigate to `http://localhost:8000/`
+`docker run --name betesda-docker -p 8000:80 react-docker` and Navigate to `http://localhost:8000/`
 
 ## Development server
 
